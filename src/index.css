@@ -4,23 +4,20 @@
 
 @layer base {
   body {
-    @apply bg-[#050505] text-zinc-300 antialiased selection:bg-[#ff2a75] selection:text-white;
+    @apply bg-[#110408] text-stone-200 antialiased selection:bg-rose-500 selection:text-white;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
-.neon-text {
-  color: #ff2a75;
-  text-shadow: 0 0 10px rgba(255, 42, 117, 0.4), 0 0 20px rgba(255, 42, 117, 0.2), 0 0 40px rgba(255, 42, 117, 0.1);
+.glass-card {
+  background: rgba(36, 10, 19, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(225, 29, 72, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.minimal-card {
-  background: transparent;
-  border: 1px solid #1a1a1a;
-  transition: all 0.3s ease;
-}
-
-.minimal-card:hover {
-  border-color: #ff2a75;
-  background: rgba(255, 42, 117, 0.02);
+.glass-card:hover {
+  border-color: rgba(251, 113, 133, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px -10px rgba(225, 29, 72, 0.2);
 }

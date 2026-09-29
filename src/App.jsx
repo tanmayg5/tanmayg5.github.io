@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
-  Cpu, ExternalLink, Code, Award, Activity, Music, Layers, ChevronRight, CheckCircle2 
+  Terminal, Cpu, Zap, Globe, Mail, 
+  ExternalLink, Code, Award, Activity, Music, Layers, ChevronRight, CheckCircle2 
 } from 'lucide-react';
 
+const LinkedinIcon = ({ size = 18, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect width="4" height="12" x="2" y="9"/>
+    <circle cx="4" cy="4" r="2"/>
+  </svg>
+);
+
 export default function App() {
+  const [activeTab, setActiveTab] = useState('all');
+
   const ventures = [
     {
       title: "Dazzler",
       role: "Co-Founder & Lead Engineer",
       link: "https://www.dazzlerlighting.com",
       status: "Live Business",
-      desc: "Autonomous, music-aware stage lighting system. Built a low-latency C++ engine with Essentia to extract live spectral audio features and map them to DMX protocols in real-time.",
-      highlights: ["1st Place @ NUS nHacks Pitch Competition", "Featured @ GITEX Asia SG100 (Marina Bay Sands)", "Live Deployment @ Monti Singapore"],
-      tech: ["C++", "Essentia", "DMX Protocols", "Machine Learning"]
+      desc: "Autonomous, music-aware stage lighting system. Built a low-latency C++ engine with Essentia to extract live spectral audio features and map them to DMX protocols in real-time[cite: 1].",
+      highlights: ["1st Place @ NUS nHacks Pitch Competition[cite: 1]", "Featured @ GITEX Asia SG100 (Marina Bay Sands)", "Live Deployment @ Monti Singapore"],
+      tech: ["C++", "Essentia", "DMX Protocols", "Machine Learning"],
+      featured: true
     },
     {
       title: "Vendsor",
@@ -21,7 +33,8 @@ export default function App() {
       status: "Active Platform",
       desc: "Intelligent platform designed to map, track, and locate automated vending infrastructure across urban environments.",
       highlights: ["Automated geolocation tracking", "Real-time availability telemetry"],
-      tech: ["Full-Stack", "Geolocation API", "React"]
+      tech: ["Full-Stack", "Geolocation API", "React"],
+      featured: true
     },
     {
       title: "Edge AI Music Emotion Recognition",
@@ -29,15 +42,26 @@ export default function App() {
       status: "Hardware AI",
       desc: "8-bit quantized neural network engineered for real-time music emotion detection directly on edge silicon using Quantization-Aware Training & Knowledge Distillation.",
       highlights: ["Deployed on PYNQ-Z2 FPGA board", "Low-power hardware acceleration"],
-      tech: ["PYNQ-Z2 FPGA", "Python", "Quantization", "Edge AI"]
+      tech: ["PYNQ-Z2 FPGA", "Python", "Quantization", "Edge AI"],
+      featured: false
     },
     {
       title: "AWS Data Engineering Pipeline",
       role: "Data Systems Architect",
       status: "Cloud Infrastructure",
-      desc: "High-throughput parallel data pipeline built on AWS EC2 processing batch stream data using Apache Spark and Dockerized Elasticsearch/Kibana for real-time analytics.",
-      highlights: ["Parallel EC2 compute architecture", "Distributed Spark processing"],
-      tech: ["AWS EC2", "Apache Spark", "Docker", "Elasticsearch"]
+      desc: "High-throughput parallel data pipeline built on AWS EC2 processing batch stream data using Apache Spark and Dockerized Elasticsearch/Kibana for real-time analytics[cite: 1].",
+      highlights: ["Parallel EC2 compute architecture[cite: 1]", "Distributed Spark processing[cite: 1]"],
+      tech: ["AWS EC2", "Apache Spark", "Docker", "Elasticsearch", "Kibana"],
+      featured: false
+    },
+    {
+      title: "Autonomous Maze-Navigating Robot",
+      role: "Robotics Engineer",
+      status: "Autonomous Systems",
+      desc: "TurtleBot system programmed with the A* pathfinding algorithm for complete autonomous maze navigation, obstacle detection, and continuous communication relay[cite: 1].",
+      highlights: ["Full autonomous navigation[cite: 1]", "Real-time obstacle avoidance[cite: 1]"],
+      tech: ["Robotics", "A* Algorithm", "Sensor Fusion"],
+      featured: false
     }
   ];
 
@@ -69,9 +93,9 @@ export default function App() {
       period: "Jan 2026 – May 2026",
       location: "Singapore",
       bullets: [
-        "Architected a centralized vessel management application using Microsoft Power Apps and Dataverse, replacing legacy Excel workflows across 200+ vessels.",
-        "Integrated an AI chatbot via Microsoft Copilot to assist fleet crew in real-time troubleshooting of onboard equipment.",
-        "Developed relational database architecture and automated email parsing flows for ship maintenance tracking."
+        "Architected a centralized vessel management application using Microsoft Power Apps and Dataverse, replacing legacy Excel workflows across 200+ vessels[cite: 1].",
+        "Integrated an AI chatbot via Microsoft Copilot to assist fleet crew in real-time troubleshooting of onboard equipment[cite: 1].",
+        "Developed relational database architecture and automated email parsing flows for ship maintenance tracking[cite: 1]."
       ]
     },
     {
@@ -80,97 +104,117 @@ export default function App() {
       period: "May 2025 – Aug 2025",
       location: "Singapore",
       bullets: [
-        "Engineered a full-stack e-commerce platform using Python, Flask, and MySQL with custom Werkzeug authentication decorators.",
-        "Optimized backend queries and database latency for seamless administrative and customer workflows."
+        "Engineered a full-stack e-commerce platform using Python, Flask, and MySQL with custom Werkzeug authentication decorators[cite: 1].",
+        "Optimized backend queries and database latency for seamless administrative and customer workflows[cite: 1]."
+      ]
+    },
+    {
+      company: "InfoBeans",
+      role: "Data Science Intern",
+      period: "Jul 2024 – Aug 2024",
+      location: "Indore, India",
+      bullets: [
+        "Executed end-to-end exploratory data analysis (EDA) using Pandas, NumPy, and Matplotlib to extract operational business metrics[cite: 1]."
       ]
     }
   ];
 
   const skills = {
-    "Languages": ["Python", "C++", "Java", "SQL", "Q (kdb+)", "R", "Verilog", "VBA"],
-    "Web & Cloud": ["React", "Next.js", "Flask", "AWS (EC2, Lambda)", "Docker", "Elasticsearch"],
+    "Languages": ["Python (5+ yrs)", "C++", "Java", "SQL", "Q (kdb+)", "R", "Verilog", "VBA"],
+    "Web & Cloud": ["React", "Next.js", "Flask", "AWS (EC2, Lambda)", "Docker", "Vercel", "Elasticsearch", "Kibana"],
     "Hardware & Embedded": ["Basys 3", "PYNQ-Z2 FPGA", "ESP32", "Arduino", "Vivado", "Linux/WSL"],
-    "Automation & Tools": ["Power Apps", "Power Automate", "Git", "Selenium", "Office Scripts"]
+    "Automation & Tools": ["Power Apps", "Power Automate", "Git", "Selenium", "Office Scripts"],
+    "Creative Engine": ["Adobe Illustrator", "Figma", "CapCut", "Inkscape"]
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-300 font-mono selection:bg-[#ff2a75] selection:text-white">
-      
-      {/* Minimalist Centered Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-[#050505]/90 backdrop-blur-sm border-b border-[#1a1a1a] py-4">
-        <div className="max-w-4xl mx-auto flex justify-center gap-8 text-xs uppercase tracking-widest text-zinc-500">
-          <a href="#about" className="hover:text-[#ff2a75] transition-colors">About</a>
-          <a href="#ventures" className="hover:text-[#ff2a75] transition-colors">Ventures</a>
-          <a href="#experience" className="hover:text-[#ff2a75] transition-colors">Experience</a>
-          <a href="#skills" className="hover:text-[#ff2a75] transition-colors">Skills</a>
+    <div className="min-h-screen bg-[#110408] text-stone-200">
+      {/* Navigation Header */}
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-[#110408]/80 border-b border-rose-900/40 px-6 py-4">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <a href="#" className="text-xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-300">
+            TG<span className="text-rose-400">.</span>
+          </a>
+          <div className="flex gap-6 text-sm font-medium text-stone-400">
+            <a href="#about" className="hover:text-rose-400 transition-colors">About</a>
+            <a href="#ventures" className="hover:text-rose-400 transition-colors">Ventures</a>
+            <a href="#experience" className="hover:text-rose-400 transition-colors">Experience</a>
+            <a href="#skills" className="hover:text-rose-400 transition-colors">Stack</a>
+          </div>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-20 space-y-32">
+      <main className="max-w-6xl mx-auto px-6 py-12 space-y-24">
         
-        {/* Centered Hero Section */}
-        <section id="about" className="flex flex-col items-center justify-center text-center pt-32 pb-10">
-          <h1 className="text-5xl md:text-8xl font-black tracking-tighter neon-text mb-6 font-sans">
-            Tanmay Gupta
+        {/* Hero Section */}
+        <section id="about" className="space-y-6 pt-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-950/60 border border-rose-900/50 text-rose-300 text-xs font-mono">
+            <Zap size={14} className="animate-pulse" /> Electrical Engineering & Data Science @ NUS[cite: 1]
+          </div>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-rose-200">Autonomous Systems</span> & Scalable Software.
           </h1>
-          <p className="text-lg md:text-xl text-zinc-300 mb-2 font-mono">
-            Engineering autonomous hardware. Architecting scalable software.
+          <p className="text-stone-400 text-lg md:text-xl max-w-3xl leading-relaxed">
+            I'm <strong className="text-stone-200">Tanmay Gupta</strong>—a double major at the National University of Singapore minoring in Innovation & Design (GPA: 4.21/5)[cite: 1]. I operate at the intersection of embedded AI hardware, real-time C++ audio extraction, cloud data pipelines, and startup venture development.
           </p>
-          <p className="text-xs md:text-sm text-zinc-500 mb-10 tracking-widest uppercase">
-            EE & Data Science @ NUS | Bridging Embedded AI with Cloud Architecture
-          </p>
-          
-          <div className="flex gap-4 font-sans text-sm">
-            <a href="#ventures" className="bg-[#ff2a75] text-black px-8 py-3 font-bold hover:bg-[#ff4d8c] transition-colors">
-              Explore My Work
+
+          <div className="flex flex-wrap gap-4 pt-4">
+            <a href="https://www.linkedin.com/in/tanmay-gupta-ab5483252/" target="_blank" rel="noreferrer" 
+               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm transition-all shadow-lg shadow-rose-900/30">
+              <LinkedinIcon size={18} /> LinkedIn
             </a>
-            <a href="mailto:tanmayg0510@gmail.com" className="border border-[#ff2a75] text-[#ff2a75] px-8 py-3 font-bold hover:bg-[#ff2a75]/10 transition-colors">
-              Get In Touch
+            <a href="mailto:tanmayg0510@gmail.com" 
+               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg glass-card hover:bg-[#2a0815] text-stone-200 font-semibold text-sm transition-all">
+              <Mail size={18} /> Contact
             </a>
           </div>
         </section>
 
         {/* Featured Startups & Key Projects */}
-        <section id="ventures" className="space-y-10">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl font-bold text-white font-sans uppercase tracking-widest">Startups & Systems</h2>
-            <div className="h-px w-20 bg-[#ff2a75] mx-auto"></div>
+        <section id="ventures" className="space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+              <Cpu className="text-rose-400" /> Startups & Engineered Systems
+            </h2>
+            <p className="text-stone-400 text-sm">Commercial ventures and deep-tech hardware/software builds.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             {ventures.map((item, idx) => (
-              <div key={idx} className="minimal-card p-6 space-y-4 flex flex-col justify-between">
-                <div className="space-y-4">
+              <div key={idx} className="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                <div className="space-y-3">
                   <div className="flex justify-between items-start">
-                    <span className="text-[10px] uppercase tracking-widest text-[#ff2a75]">
+                    <span className="text-xs font-mono px-2.5 py-1 rounded bg-[#3a0d1e] text-rose-300 border border-rose-900/40">
                       {item.status}
                     </span>
                     {item.link && (
-                      <a href={item.link} target="_blank" rel="noreferrer" className="text-zinc-500 hover:text-[#ff2a75] transition-colors">
-                        <ExternalLink size={16} />
+                      <a href={item.link} target="_blank" rel="noreferrer" className="text-stone-400 hover:text-rose-400 transition-colors">
+                        <ExternalLink size={18} />
                       </a>
                     )}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white font-sans">{item.title}</h3>
-                    <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">{item.role}</p>
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-rose-400 font-mono mt-0.5">{item.role}</p>
                   </div>
-                  <p className="text-zinc-400 text-sm leading-relaxed font-sans">{item.desc}</p>
+                  <p className="text-stone-300 text-sm leading-relaxed">{item.desc}</p>
                   
-                  <div className="space-y-2 pt-2">
+                  <div className="space-y-1.5 pt-2">
                     {item.highlights.map((h, hIdx) => (
-                      <div key={hIdx} className="flex items-center gap-2 text-xs text-zinc-500 font-sans">
-                        <CheckCircle2 size={12} className="text-[#ff2a75] shrink-0" />
+                      <div key={hIdx} className="flex items-center gap-2 text-xs text-stone-400">
+                        <CheckCircle2 size={13} className="text-rose-300 shrink-0" />
                         <span>{h}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 pt-6 border-t border-[#1a1a1a]">
+                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[#3a0d1e]">
                   {item.tech.map((t, tIdx) => (
-                    <span key={tIdx} className="text-[10px] text-zinc-500 uppercase tracking-widest">
-                      [{t}]
+                    <span key={tIdx} className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#1f0710] text-stone-400 border border-[#3a0d1e]">
+                      {t}
                     </span>
                   ))}
                 </div>
@@ -180,30 +224,31 @@ export default function App() {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="space-y-10">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl font-bold text-white font-sans uppercase tracking-widest">Experience</h2>
-            <div className="h-px w-20 bg-[#ff2a75] mx-auto"></div>
+        <section id="experience" className="space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+              <Layers className="text-rose-300" /> Industry Experience
+            </h2>
+            <p className="text-stone-400 text-sm">Engineering internships across software, data science, and maritime automation.</p>
           </div>
 
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
-              <div key={idx} className="minimal-card p-8">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6">
+              <div key={idx} className="glass-card rounded-xl p-6 space-y-3">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-1">
                   <div>
-                    <h3 className="text-lg font-bold text-white font-sans">{exp.role}</h3>
-                    <p className="text-sm text-[#ff2a75] font-sans">{exp.company}</p>
+                    <h3 className="text-lg font-bold text-white">{exp.role} <span className="text-rose-400">@ {exp.company}</span></h3>
+                    <p className="text-xs text-stone-400 font-mono">{exp.location}</p>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-xs text-zinc-500 uppercase tracking-widest">{exp.period}</span>
-                    <span className="block text-xs text-zinc-600">{exp.location}</span>
-                  </div>
+                  <span className="text-xs font-mono text-stone-400 bg-[#1f0710] px-3 py-1 rounded-full w-fit border border-[#3a0d1e]">
+                    {exp.period}
+                  </span>
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-2 pt-2">
                   {exp.bullets.map((b, bIdx) => (
-                    <li key={bIdx} className="text-sm text-zinc-400 flex items-start gap-3 font-sans">
-                      <ChevronRight size={16} className="text-[#ff2a75] shrink-0 mt-0.5" />
-                      <span className="leading-relaxed">{b}</span>
+                    <li key={bIdx} className="text-sm text-stone-300 flex items-start gap-2">
+                      <ChevronRight size={16} className="text-rose-400 shrink-0 mt-0.5" />
+                      <span>{b}</span>
                     </li>
                   ))}
                 </ul>
@@ -213,19 +258,21 @@ export default function App() {
         </section>
 
         {/* Technical Arsenal */}
-        <section id="skills" className="space-y-10">
-          <div className="text-center space-y-2">
-            <h2 className="text-2xl font-bold text-white font-sans uppercase tracking-widest">Technical Stack</h2>
-            <div className="h-px w-20 bg-[#ff2a75] mx-auto"></div>
+        <section id="skills" className="space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+              <Code className="text-rose-400" /> Technical Arsenal
+            </h2>
+            <p className="text-stone-400 text-sm">Core technologies, frameworks, and hardware architectures.</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(skills).map(([cat, list], idx) => (
-              <div key={idx} className="minimal-card p-6 text-center">
-                <h3 className="text-xs font-bold text-[#ff2a75] uppercase tracking-widest mb-4">{cat}</h3>
-                <div className="flex flex-wrap justify-center gap-2">
+              <div key={idx} className="glass-card rounded-xl p-5 space-y-3">
+                <h3 className="text-sm font-mono font-bold text-rose-400 uppercase tracking-wider">{cat}</h3>
+                <div className="flex flex-wrap gap-2">
                   {list.map((skill, sIdx) => (
-                    <span key={sIdx} className="text-xs text-zinc-400 uppercase tracking-wider px-2 border-r border-[#1a1a1a] last:border-0">
+                    <span key={sIdx} className="text-xs font-mono px-2.5 py-1 rounded-md bg-[#1f0710] text-stone-300 border border-[#3a0d1e]">
                       {skill}
                     </span>
                   ))}
@@ -236,29 +283,33 @@ export default function App() {
         </section>
 
         {/* Life & Engineering Craft */}
-        <section className="border border-[#1a1a1a] p-10 text-center space-y-8">
-          <h2 className="text-xl font-bold text-white font-sans uppercase tracking-widest">Beyond the Screen</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 text-sm font-sans">
-            <div className="space-y-3">
-              <Award size={20} className="text-[#ff2a75] mx-auto" />
-              <h3 className="text-white font-bold uppercase tracking-widest text-xs">Squash Leadership</h3>
-              <p className="text-zinc-500 leading-relaxed text-xs">
-                Squash Interest Group Leader and team captain executing training and strategy across Daly College, King Edward VII Hall, and Valour House.
+        <section className="glass-card rounded-2xl p-8 space-y-6">
+          <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+            <Activity className="text-rose-300" /> Beyond the Screen
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6 text-sm">
+            <div className="space-y-2">
+              <h3 className="text-white font-bold flex items-center gap-2">
+                <Award size={16} className="text-rose-400" /> Leadership & Sport
+              </h3>
+              <p className="text-stone-400 leading-relaxed">
+                Former Squash Interest Group Leader and team captain across Daly College, King Edward VII Hall, and Valour House.
               </p>
             </div>
-            <div className="space-y-3">
-              <Music size={20} className="text-[#ff2a75] mx-auto" />
-              <h3 className="text-white font-bold uppercase tracking-widest text-xs">Fingerstyle Guitar</h3>
-              <p className="text-zinc-500 leading-relaxed text-xs">
-                Trinity Grade 5 certified guitarist focusing on complex fingerstyle acoustic arrangements.
+            <div className="space-y-2">
+              <h3 className="text-white font-bold flex items-center gap-2">
+                <Music size={16} className="text-rose-400" /> Fingerstyle Guitar
+              </h3>
+              <p className="text-stone-400 leading-relaxed">
+                Trinity Grade 5 certified guitarist focusing on complex fingerstyle acoustic compositions and arrangements.
               </p>
             </div>
-            <div className="space-y-3">
-              <Activity size={20} className="text-[#ff2a75] mx-auto" />
-              <h3 className="text-white font-bold uppercase tracking-widest text-xs">Athletic Discipline</h3>
-              <p className="text-zinc-500 leading-relaxed text-xs">
-                Structured track & distance running practitioner heavily focused on midfoot-striking biomechanics.
+            <div className="space-y-2">
+              <h3 className="text-white font-bold flex items-center gap-2">
+                <Activity size={16} className="text-rose-400" /> Athletic Discipline
+              </h3>
+              <p className="text-stone-400 leading-relaxed">
+                Structured track & distance running practitioner focusing on midfoot-striking endurance biomechanics.
               </p>
             </div>
           </div>
@@ -266,8 +317,9 @@ export default function App() {
 
       </main>
 
-      <footer className="border-t border-[#1a1a1a] py-8 text-center text-xs text-zinc-600 uppercase tracking-widest">
-        <p>Tanmay Gupta // Engineered with React</p>
+      {/* Footer */}
+      <footer className="border-t border-[#3a0d1e] mt-20 py-8 text-center text-xs text-stone-500 font-mono">
+        <p>Built by Tanmay Gupta • Designed with Vite, React & Tailwind CSS</p>
       </footer>
     </div>
   );
